@@ -18,8 +18,10 @@ class FileLogger : public ILogger {
     IKeycodeMapper* _mapper;
     std::ofstream _stream;
 
-    bool modifierCtrl;
-    bool modifierShift;
+    bool _modifierCtrl;
+    bool _modifierShift;
+
+    std::time_t _lastKeystroke;
 };
 
 }
