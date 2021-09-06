@@ -30,7 +30,17 @@ LRESULT CALLBACK KeystrokeCapturerWindows::LowLevelKeyboardProc(int nCode, WPARA
         case WM_KEYUP:
         case WM_SYSKEYUP:
             PKBDLLHOOKSTRUCT p = (PKBDLLHOOKSTRUCT)lParam;
-            int state = wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN;
+            KeyState state;
+
+            switch (wParam) {
+            case WM_KEYDOWN:
+            case WM_SYSKEYDOWN:
+                state = KeyState::Pressed;
+                break;
+            default:
+                state = KeyState::Released;
+                break;
+            }
 
             for (ILogger* logger : _loggers) {
                 logger->logKeycode(p->vkCode, state);
