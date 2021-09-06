@@ -25,20 +25,20 @@ void KeystrokeCapturerWindows::addLogger(ILogger* logger) {
 LRESULT CALLBACK KeystrokeCapturerWindows::LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
     if (nCode == HC_ACTION) {
         switch (wParam) {
-            case WM_KEYDOWN:
-            case WM_SYSKEYDOWN:
-            case WM_KEYUP:
-            case WM_SYSKEYUP:
-                PKBDLLHOOKSTRUCT p = (PKBDLLHOOKSTRUCT)lParam;
-                int state = wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN;
+        case WM_KEYDOWN:
+        case WM_SYSKEYDOWN:
+        case WM_KEYUP:
+        case WM_SYSKEYUP:
+            PKBDLLHOOKSTRUCT p = (PKBDLLHOOKSTRUCT)lParam;
+            int state = wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN;
 
-                for (ILogger* logger : _loggers) {
-                    logger->logKeycode(p->vkCode, state);
-                }
+            for (ILogger* logger : _loggers) {
+                logger->logKeycode(p->vkCode, state);
+            }
 
-                // keybd_event('B', 0, 0, 0);
-                // keybd_event('B', 0, KEYEVENTF_KEYUP, 0);
-                break;
+            // keybd_event('B', 0, 0, 0);
+            // keybd_event('B', 0, KEYEVENTF_KEYUP, 0);
+            break;
         }
     }
 
