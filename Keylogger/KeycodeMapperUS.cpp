@@ -196,14 +196,6 @@ std::string KeycodeMapperUS::keycodeToStr(int keycode, bool modifierShift) {
     return wrap("{" + std::to_string(keycode) + "}");
 }
 
-bool KeycodeMapperUS::isShiftConsumed(int keycode) {
-    return false;
-}
-
-bool KeycodeMapperUS::isModifier(int keycode) {
-    return false;
-}
-
 bool KeycodeMapperUS::isCtrl(int keycode) {
     return keycode == VK_CONTROL || keycode == VK_LCONTROL || keycode == VK_RCONTROL;
 }

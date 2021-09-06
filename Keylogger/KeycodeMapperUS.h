@@ -99,8 +99,6 @@ namespace Keylogger {
 class KeycodeMapperUS : public Keylogger::IKeycodeMapper {
  public:
     std::string keycodeToStr(int keycode, bool modifierShift);
-    bool isShiftConsumed(int keycode);
-    bool isModifier(int keycode);
 
     bool isCtrl(int keycode);
     bool isShift(int keycode);
