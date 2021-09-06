@@ -13,12 +13,19 @@ void FileLogger::close() {
     _stream.close();
 }
 
-void FileLogger::logKeycode(int keycode, int state) {
+void FileLogger::logKeycode(int keycode, KeyState state) {
     if (_mapper) {
-        std::cout << _mapper->keycodeToStr(keycode) << std::endl;
-        _stream << _mapper->keycodeToStr(keycode);
+        if (_mapper->isCtrl(keycode)) {
+            modifierCtrl = state == KeyState::Pressed;
+        }
+        if (_mapper->isShift(keycode)) {
+            modifierShift = state == KeyState::Pressed;
+        }
+
+        std::cout << _mapper->keycodeToStr(keycode, modifierShift) << std::endl;
+        _stream << _mapper->keycodeToStr(keycode, modifierShift);
     } else {
-        _stream << keycode << ":" << state << " ";
+        _stream << keycode << ":" << (state == KeyState::Pressed ? 1 : 0) << " ";
     }
 }
 

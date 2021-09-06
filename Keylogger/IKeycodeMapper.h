@@ -7,9 +7,12 @@ namespace Keylogger {
 
 class IKeycodeMapper {
  public:
-    virtual std::string keycodeToStr(int keycode) = 0;
+    virtual std::string keycodeToStr(int keycode, bool modifierShift) = 0;
     virtual bool isShiftConsumed(int keycode) = 0;
     virtual bool isModifier(int keycode) = 0;
+
+    virtual bool isCtrl(int keycode) = 0;
+    virtual bool isShift(int keycode) = 0;
 };
 
 }

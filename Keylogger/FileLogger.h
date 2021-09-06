@@ -12,11 +12,14 @@ class FileLogger : public ILogger {
     bool open(IKeycodeMapper* mapper, std::string filename);
     void close();
 
-    void logKeycode(int keycode, int state);
+    void logKeycode(int keycode, KeyState state);
 
  private:
     IKeycodeMapper* _mapper;
     std::ofstream _stream;
+
+    bool modifierCtrl;
+    bool modifierShift;
 };
 
 }
