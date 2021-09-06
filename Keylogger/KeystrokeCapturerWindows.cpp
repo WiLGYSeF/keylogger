@@ -45,9 +45,6 @@ LRESULT CALLBACK KeystrokeCapturerWindows::LowLevelKeyboardProc(int nCode, WPARA
             for (ILogger* logger : _loggers) {
                 logger->logKeycode(p->vkCode, state);
             }
-
-            // keybd_event('B', 0, 0, 0);
-            // keybd_event('B', 0, KEYEVENTF_KEYUP, 0);
             break;
         }
     }
