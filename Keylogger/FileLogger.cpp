@@ -59,6 +59,7 @@ void FileLogger::logKeycode(int keycode, KeyState state) {
     if (curtime - _lastKeystroke > TIME_INACTIVE_PAUSE) {
         _stream << std::endl;
     } else if (curtime - _lastKeystroke > TIME_INACTIVE_BREAK) {
+        _stream << std::endl << std::endl;
         writeHeader(_stream);
     }
     _lastKeystroke = curtime;
