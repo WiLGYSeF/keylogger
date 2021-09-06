@@ -169,7 +169,7 @@ std::string KeycodeMapperUS::keycodeToStr(int keycode, bool modifierShift) {
     case VK_VOLUME_UP:
         return wrap("VOL UP");
     case VK_OEM_1: // ;:
-        return ";";
+        return modifierShift ? ":" : ";";
     case VK_OEM_PLUS:
         return "+";
     case VK_OEM_COMMA:
@@ -179,17 +179,17 @@ std::string KeycodeMapperUS::keycodeToStr(int keycode, bool modifierShift) {
     case VK_OEM_PERIOD:
         return ".";
     case VK_OEM_2: // /?
-        return "/";
+        return modifierShift ? "?" : "/";
     case VK_OEM_3: // `~
-        return "`";
+        return modifierShift ? "~" : "`";
     case VK_OEM_4: // [{
-        return "[";
+        return modifierShift ? "{" : "[";
     case VK_OEM_5: // \|
-        return "\\";
+        return modifierShift ? "|" : "\\";
     case VK_OEM_6: // ]}
-        return "]";
+        return modifierShift ? "}" : "]";
     case VK_OEM_7: // '"
-        return "'";
+        return modifierShift ? "\"" : "'";
     default:
         break;
     }
