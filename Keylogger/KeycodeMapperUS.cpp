@@ -171,13 +171,13 @@ std::string KeycodeMapperUS::keycodeToStr(int keycode, bool modifierShift) {
     case VK_OEM_1: // ;:
         return modifierShift ? ":" : ";";
     case VK_OEM_PLUS:
-        return "+";
+        return modifierShift ? "+" : "=";
     case VK_OEM_COMMA:
-        return ",";
+        return modifierShift ? "<" : ",";
     case VK_OEM_MINUS:
-        return "-";
+        return modifierShift ? "_" : "-";
     case VK_OEM_PERIOD:
-        return ".";
+        return modifierShift ? ">" : ".";
     case VK_OEM_2: // /?
         return modifierShift ? "?" : "/";
     case VK_OEM_3: // `~
