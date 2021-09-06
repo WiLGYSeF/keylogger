@@ -148,12 +148,15 @@
     <ClCompile Include="KeycodeMapperUS.cpp" />
     <ClCompile Include="KeystrokeCapturerWindows.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="WindowHandlerWindows.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClipboardHandlerWindows.h" />
     <ClInclude Include="FileLogger.h" />
+    <ClInclude Include="IWindowHandler.h" />
     <ClInclude Include="KeycodeMapperUS.h" />
     <ClInclude Include="KeystrokeCapturerWindows.h" />
+    <ClInclude Include="WindowHandlerWindows.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
