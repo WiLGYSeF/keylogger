@@ -149,6 +149,8 @@
     <ClCompile Include="KeycodeMapperUS.cpp" />
     <ClCompile Include="KeystrokeCapturerWindows.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="SandboxListener.cpp" />
+    <ClCompile Include="SandboxListener.h" />
     <ClCompile Include="WindowHandlerWindows.cpp" />
   </ItemGroup>
   <ItemGroup>

