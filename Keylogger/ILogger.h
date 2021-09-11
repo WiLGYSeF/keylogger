@@ -3,16 +3,12 @@
 
 #include "IClipboardHandler.h"
 #include "IKeycodeMapper.h"
+#include "IKeystrokeCapturer.h"
 #include "IWindowHandler.h"
 
 #include <iostream>
 
 namespace Keylogger {
-
-enum class KeyState {
-    Released,
-    Pressed
-};
 
 class ILogger {
  public:

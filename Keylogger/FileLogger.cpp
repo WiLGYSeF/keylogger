@@ -102,7 +102,6 @@ void FileLogger::logKeycode(int keycode, KeyState state) {
         }
 
         if (state == KeyState::Pressed) {
-            std::cout << _mapper->keycodeToStr(keycode, _modifierShift);
             _stream << _mapper->keycodeToStr(keycode, _modifierShift);
         }
     } else {
