@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="ClipboardHandlerWindows.cpp" />
     <ClCompile Include="FileLogger.cpp" />
+    <ClCompile Include="getopt.c" />
     <ClCompile Include="IClipboardHandler.h" />
     <ClCompile Include="ILogger.h" />
     <ClCompile Include="IKeycodeMapper.h" />
@@ -153,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="ClipboardHandlerWindows.h" />
     <ClInclude Include="FileLogger.h" />
+    <ClInclude Include="getopt.h" />
     <ClInclude Include="IWindowHandler.h" />
     <ClInclude Include="KeycodeMapperUS.h" />
     <ClInclude Include="KeystrokeCapturerWindows.h" />
