@@ -6,8 +6,6 @@
 const std::time_t TIME_INACTIVE_PAUSE = 15;
 const std::time_t TIME_INACTIVE_BREAK = 300;
 
-namespace Keylogger {
-
 std::string lp0(int num) {
     if (num > 9) {
         return std::to_string(num);
@@ -15,7 +13,7 @@ std::string lp0(int num) {
     return "0" + std::to_string(num);
 }
 
-void writeHeader(std::ofstream &stream) {
+void writeHeader(std::ofstream& stream) {
     std::time_t t = std::time(0);
     std::tm* now = std::localtime(&t);
 
@@ -26,6 +24,8 @@ void writeHeader(std::ofstream &stream) {
         << " ---]"
         << std::endl << std::endl;
 }
+
+namespace Keylogger {
 
 bool FileLogger::open(std::string filename) {
     return open(nullptr, filename);

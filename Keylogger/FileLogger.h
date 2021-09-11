@@ -2,7 +2,9 @@
 #define FILELOGGER_H
 
 #include "IClipboardHandler.h"
+#include "IKeycodeMapper.h"
 #include "ILogger.h"
+#include "IWindowHandler.h"
 
 #include <fstream>
 
