@@ -1,5 +1,7 @@
-#ifndef KEYSTROKE_CAPTURER_WINDOWS
-#define KEYSTROKE_CAPTURER_WINDOWS
+#ifndef KEYSTROKE_CAPTURER_WINDOWS_H
+#define KEYSTROKE_CAPTURER_WINDOWS_H
+
+#ifdef _WIN32
 
 #include "IKeystrokeCapturer.h"
 #include "ILogger.h"
@@ -31,4 +33,6 @@ class KeystrokeCapturerWindows : public IKeystrokeCapturer {
 
 }
 
-#endif // KEYSTROKE_CAPTURER_WINDOWS
+#endif // defined(_WIN32)
+
+#endif // KEYSTROKE_CAPTURER_WINDOWS_H

