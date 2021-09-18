@@ -34,12 +34,12 @@ Keylogger::IKeycodeMapper* getMapperByStr(std::string mapper) {
     return nullptr;
 }
 
-unsigned int sleep_ms(unsigned int) {
+unsigned int sleep_ms(unsigned int ms) {
 #ifdef _WIN32
-    Sleep(1000);
+    Sleep(ms);
     return 0;
 #else
-    return sleep(1000);
+    return sleep(ms);
 #endif
 }
 
