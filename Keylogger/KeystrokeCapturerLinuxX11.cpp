@@ -20,8 +20,22 @@ void KeystrokeCapturerLinuxX11::stop() {
     XCloseDisplay(_display);
 }
 
-void KeystrokeCapturerLinuxX11::consumeKeystrokes(bool consume) {
+bool KeystrokeCapturerLinuxX11::consumeKeystrokes(bool consume) {
     _consumeKeystrokes = consume;
+    if (_consumeKeystrokes) {
+        int ret = XGrabKeyboard(
+            _display,
+            DefaultRootWindow(_display),
+            false,
+            GrabModeAsync,
+            GrabModeAsync,
+            CurrentTime
+        );
+        return ret == 0;
+    }
+
+    XUngrabKeyboard(_display, CurrentTime);
+    return true;
 }
 
 void KeystrokeCapturerLinuxX11::setCallback(std::function<void(int keycode, KeyState state)> callback) {

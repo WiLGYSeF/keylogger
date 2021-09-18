@@ -17,8 +17,9 @@ void KeystrokeCapturerWindows::stop() {
     UnhookWindowsHookEx(_keyboardHook);
 }
 
-void KeystrokeCapturerWindows::consumeKeystrokes(bool consume) {
+bool KeystrokeCapturerWindows::consumeKeystrokes(bool consume) {
     _consumeKeystrokes = consume;
+    return true;
 }
 
 void KeystrokeCapturerWindows::setCallback(std::function<void(int keycode, KeyState state)> callback) {

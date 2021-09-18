@@ -15,7 +15,7 @@ class KeystrokeCapturerWindows : public IKeystrokeCapturer {
     bool start();
     void stop();
 
-    void consumeKeystrokes(bool consume);
+    bool consumeKeystrokes(bool consume);
     void setCallback(std::function<void (int keycode, KeyState state)> callback);
     void addLogger(ILogger* logger);
 
