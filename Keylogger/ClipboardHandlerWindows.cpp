@@ -1,3 +1,5 @@
+#ifdef _WIN32
+
 #include "ClipboardHandlerWindows.h"
 
 #include <windows.h>
@@ -25,3 +27,5 @@ std::string ClipboardHandlerWindows::getClipboardString() {
 }
 
 }
+
+#endif // defined(_WIN32)

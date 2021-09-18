@@ -1,14 +1,12 @@
 #ifndef KEYSTROKE_CAPTURER
 #define KEYSTROKE_CAPTURER
 
+#include "ILogger.h"
+#include "KeyState.h"
+
 #include <functional>
 
 namespace Keylogger {
-
-enum class KeyState {
-    Released,
-    Pressed
-};
 
 class IKeystrokeCapturer {
  public:
@@ -17,6 +15,7 @@ class IKeystrokeCapturer {
 
     virtual void consumeKeystrokes(bool consume) = 0;
     virtual void setCallback(std::function<void(int keycode, KeyState state)> callback) = 0;
+    virtual void addLogger(ILogger* logger) = 0;
 };
 
 }

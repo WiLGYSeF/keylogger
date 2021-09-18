@@ -1,6 +1,5 @@
 #include "FileLogger.h"
 
-#include <ctime>
 #include <string>
 
 const std::time_t TIME_INACTIVE_PAUSE = 15;

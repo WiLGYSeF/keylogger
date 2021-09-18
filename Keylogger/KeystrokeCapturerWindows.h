@@ -4,9 +4,7 @@
 #ifdef _WIN32
 
 #include "IKeystrokeCapturer.h"
-#include "ILogger.h"
 
-#include <functional>
 #include <vector>
 #include <windows.h>
 

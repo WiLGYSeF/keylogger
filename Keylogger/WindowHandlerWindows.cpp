@@ -1,3 +1,5 @@
+#ifdef _WIN32
+
 #include "WindowHandlerWindows.h"
 
 #include <windows.h>
@@ -13,3 +15,5 @@ std::string WindowHandlerWindows::getWindowString() {
 }
 
 }
+
+#endif // defined(_WIN32)

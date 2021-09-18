@@ -6,6 +6,7 @@
 #include "ILogger.h"
 #include "IWindowHandler.h"
 
+#include <ctime>
 #include <fstream>
 
 namespace Keylogger {
