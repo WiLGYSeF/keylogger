@@ -15,9 +15,9 @@ class SandboxListener {
     std::string getExitSeq(bool remaining);
 
  private:
-    IKeycodeMapper* _mapper;
-    std::string _sandboxExitSeq;
-    size_t _seqIndex;
+    IKeycodeMapper* _mapper = nullptr;
+    std::string _sandboxExitSeq = "";
+    size_t _seqIndex = 0;
 };
 
 }
