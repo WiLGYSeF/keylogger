@@ -1,4 +1,4 @@
-#include "KeycodeMapperUS.h"
+#include "KeycodeMapperEnUs.h"
 
 #include <string>
 
@@ -10,7 +10,7 @@ std::string wrap(std::string s) {
     return "[" + s + "]";
 }
 
-std::string KeycodeMapperUS::keycodeToStr(int keycode, bool modifierShift) {
+std::string KeycodeMapperEnUs::keycodeToStr(int keycode, bool modifierShift) {
     switch (keycode) {
     case VK_BACK:
         return wrap("BKSP");
@@ -196,11 +196,11 @@ std::string KeycodeMapperUS::keycodeToStr(int keycode, bool modifierShift) {
     return wrap("{" + std::to_string(keycode) + "}");
 }
 
-bool KeycodeMapperUS::isCtrl(int keycode) {
+bool KeycodeMapperEnUs::isCtrl(int keycode) {
     return keycode == VK_CONTROL || keycode == VK_LCONTROL || keycode == VK_RCONTROL;
 }
 
-bool KeycodeMapperUS::isShift(int keycode) {
+bool KeycodeMapperEnUs::isShift(int keycode) {
     return keycode == VK_SHIFT || keycode == VK_LSHIFT || keycode == VK_RSHIFT;
 }
 

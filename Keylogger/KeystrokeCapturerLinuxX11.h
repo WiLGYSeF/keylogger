@@ -1,5 +1,5 @@
-#ifndef KEYSTROKE_CAPTURER_LINUX_H
-#define KEYSTROKE_CAPTURER_LINUX_H
+#ifndef KEYSTROKE_CAPTURER_LINUX_X11_H
+#define KEYSTROKE_CAPTURER_LINUX_X11_H
 
 #ifdef __linux__
 
@@ -37,4 +37,4 @@ class KeystrokeCapturerLinuxX11 : public IKeystrokeCapturer {
 
 #endif // defined(__linux__)
 
-#endif // KEYSTROKE_CAPTURER_LINUX_H
+#endif // KEYSTROKE_CAPTURER_LINUX_X11_H

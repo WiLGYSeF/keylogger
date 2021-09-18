@@ -96,7 +96,7 @@
 
 namespace Keylogger {
 
-class KeycodeMapperUS : public Keylogger::IKeycodeMapper {
+class KeycodeMapperEnUs : public Keylogger::IKeycodeMapper {
  public:
     std::string keycodeToStr(int keycode, bool modifierShift);
 

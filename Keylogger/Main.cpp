@@ -1,5 +1,5 @@
 #include "FileLogger.h"
-#include "KeycodeMapperUS.h"
+#include "KeycodeMapperEnUs.h"
 #include "SandboxListener.h"
 #include "StdoutLogger.h"
 
@@ -23,8 +23,8 @@
 #endif
 
 Keylogger::IKeycodeMapper* getMapperByStr(std::string mapper) {
-    if (mapper == "us") {
-        return new Keylogger::KeycodeMapperUS();
+    if (mapper == "en-us") {
+        return new Keylogger::KeycodeMapperEnUs();
     }
     return nullptr;
 }
@@ -70,7 +70,7 @@ options:\n\
   -c, --clipboard        enable clipboard paste logging\n\
   -h, --help             shows this help menu\n\
   -k, --keycodes         log keycodes pressed/released\n\
-  -m, --mapper [name]    use this keycode mapper (default 'us')\n\
+  -m, --mapper [name]    use this keycode mapper (default 'en-us')\n\
   -o, --output [file]    output to this file\n\
   -s, --sandbox          capture key presses without passing them through\n\
                            until the correct sequence is typed, then exit\n\
@@ -83,7 +83,7 @@ available keycode maps:\n\
 
     srand(time(0));
 
-    Keylogger::IKeycodeMapper* mapper = new Keylogger::KeycodeMapperUS();
+    Keylogger::IKeycodeMapper* mapper = new Keylogger::KeycodeMapperEnUs();
     std::string logName = "log";
 
     bool clipboardEnable = false;
