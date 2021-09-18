@@ -169,7 +169,7 @@ available keycode maps:\n\
         mapper,
         clipboardEnable ? clipboard : nullptr,
         windowEnable ? window : nullptr,
-        logName + ".txt"
+        logName
     );
     capturer->addLogger(&logger);
 
