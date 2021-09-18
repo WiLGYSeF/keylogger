@@ -1,10 +1,10 @@
-#ifndef KEYSTROKE_CAPTURER_WINDOWS
-#define KEYSTROKE_CAPTURER_WINDOWS
+#ifndef KEYSTROKE_CAPTURER_WINDOWS_H
+#define KEYSTROKE_CAPTURER_WINDOWS_H
+
+#ifdef _WIN32
 
 #include "IKeystrokeCapturer.h"
-#include "ILogger.h"
 
-#include <functional>
 #include <vector>
 #include <windows.h>
 
@@ -15,7 +15,7 @@ class KeystrokeCapturerWindows : public IKeystrokeCapturer {
     bool start();
     void stop();
 
-    void consumeKeystrokes(bool consume);
+    bool consumeKeystrokes(bool consume);
     void setCallback(std::function<void (int keycode, KeyState state)> callback);
     void addLogger(ILogger* logger);
 
@@ -31,4 +31,6 @@ class KeystrokeCapturerWindows : public IKeystrokeCapturer {
 
 }
 
-#endif // KEYSTROKE_CAPTURER_WINDOWS
+#endif // defined(_WIN32)
+
+#endif // KEYSTROKE_CAPTURER_WINDOWS_H

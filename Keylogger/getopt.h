@@ -12,6 +12,8 @@
 
 #define __GETOPT_H__
 
+#ifdef _WIN32
+
  /* All the headers include this file. */
 #include <crtdefs.h>
 
@@ -51,6 +53,8 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
+
+#endif // defined(_WIN32)
 /*
  * POSIX requires the `getopt' API to be specified in `unistd.h';
  * thus, `unistd.h' includes this header.  However, we do not want

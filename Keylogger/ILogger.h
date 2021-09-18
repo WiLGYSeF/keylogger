@@ -1,7 +1,7 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
-#include "IKeystrokeCapturer.h"
+#include "KeyState.h"
 
 #include <iostream>
 
