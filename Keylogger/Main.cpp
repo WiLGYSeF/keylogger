@@ -136,9 +136,9 @@ available keycode maps:\n\
         }
     }
 
-    Keylogger::IClipboardHandler* clipboard;
-    Keylogger::IKeystrokeCapturer* capturer;
-    Keylogger::IWindowHandler* window;
+    Keylogger::IClipboardHandler* clipboard = nullptr;
+    Keylogger::IKeystrokeCapturer* capturer = nullptr;
+    Keylogger::IWindowHandler* window = nullptr;
 
     Keylogger::FileLogger loggerBin;
     Keylogger::FileLogger logger;
