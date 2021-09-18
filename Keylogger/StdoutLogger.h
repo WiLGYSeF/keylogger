@@ -16,10 +16,10 @@ class StdoutLogger : public ILogger {
 
     void logKeycode(int keycode, KeyState state);
  private:
-     IKeycodeMapper* _mapper;
+     IKeycodeMapper* _mapper = nullptr;
 
-     bool _modifierCtrl;
-     bool _modifierShift;
+     bool _modifierCtrl = false;
+     bool _modifierShift = false;
 };
 
 }

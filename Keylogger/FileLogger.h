@@ -27,16 +27,16 @@ class FileLogger : public ILogger {
     void logKeycode(int keycode, KeyState state);
 
  private:
-    IKeycodeMapper* _mapper;
-    IClipboardHandler* _clipboard;
-    IWindowHandler* _window;
+    IKeycodeMapper* _mapper = nullptr;
+    IClipboardHandler* _clipboard = nullptr;
+    IWindowHandler* _window = nullptr;
     std::ofstream _stream;
 
-    bool _modifierCtrl;
-    bool _modifierShift;
+    bool _modifierCtrl = false;
+    bool _modifierShift = false;
 
-    std::time_t _lastKeystroke;
-    std::string _lastWindow;
+    std::time_t _lastKeystroke = 0;
+    std::string _lastWindow = "";
 };
 
 }

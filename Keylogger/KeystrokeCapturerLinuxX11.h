@@ -23,12 +23,12 @@ class KeystrokeCapturerLinuxX11 : public IKeystrokeCapturer {
 
  private:
     std::vector<ILogger*> _loggers;
-    bool _consumeKeystrokes;
+    bool _consumeKeystrokes = false;
     std::function<void(int keycode, KeyState state)> _callback;
 
-    Display* _display;
-    std::thread* _thread;
-    bool _threadRun;
+    Display* _display = nullptr;
+    std::thread* _thread = nullptr;
+    bool _threadRun = false;
 
     void _keystrokeListener();
 };
