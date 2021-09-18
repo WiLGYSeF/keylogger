@@ -10,6 +10,8 @@
     #include "WindowHandlerWindows.h"
 #elif defined(__linux__)
     #include "KeystrokeCapturerLinuxX11.h"
+
+    #include <X11/Xlib.h>
 #endif
 
 #include "getopt.h"
@@ -147,6 +149,7 @@ available keycode maps:\n\
     capturer = new Keylogger::KeystrokeCapturerWindows();
     window = new Keylogger::WindowHandlerWindows();
 #elif __linux__
+    XInitThreads();
     capturer = new Keylogger::KeystrokeCapturerLinuxX11();
 #endif
 
