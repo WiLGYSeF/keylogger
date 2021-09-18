@@ -30,9 +30,6 @@
     <ClCompile Include="KeystrokeCapturerWindows.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="KeycodeMapperUS.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="FileLogger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -57,12 +54,24 @@
     <ClCompile Include="StdoutLogger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ClipboardHandlerLinuxX11.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="KeycodeMapperEnUs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="KeycodeMapperEnUsX11.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="KeystrokeCapturerLinuxX11.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowHandlerLinuxX11.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeystrokeCapturerWindows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="KeycodeMapperUS.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="FileLogger.h">
@@ -81,6 +90,24 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="StdoutLogger.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ClipboardHandlerLinuxX11.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="KeycodeMapperEnUs.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="KeycodeMapperEnUsX11.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyState.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="KeystrokeCapturerLinuxX11.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowHandlerLinuxX11.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

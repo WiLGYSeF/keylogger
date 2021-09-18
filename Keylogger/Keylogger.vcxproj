@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ClipboardHandlerLinuxX11.cpp" />
     <ClCompile Include="ClipboardHandlerWindows.cpp" />
     <ClCompile Include="FileLogger.cpp" />
     <ClCompile Include="getopt.c" />
@@ -146,22 +147,30 @@
     <ClCompile Include="ILogger.h" />
     <ClCompile Include="IKeycodeMapper.h" />
     <ClCompile Include="IKeystrokeCapturer.h" />
-    <ClCompile Include="KeycodeMapperUS.cpp" />
+    <ClCompile Include="KeycodeMapperEnUs.cpp" />
+    <ClCompile Include="KeycodeMapperEnUsX11.cpp" />
+    <ClCompile Include="KeystrokeCapturerLinuxX11.cpp" />
     <ClCompile Include="KeystrokeCapturerWindows.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="SandboxListener.cpp" />
     <ClCompile Include="SandboxListener.h" />
     <ClCompile Include="StdoutLogger.cpp" />
+    <ClCompile Include="WindowHandlerLinuxX11.cpp" />
     <ClCompile Include="WindowHandlerWindows.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ClipboardHandlerLinuxX11.h" />
     <ClInclude Include="ClipboardHandlerWindows.h" />
     <ClInclude Include="FileLogger.h" />
     <ClInclude Include="getopt.h" />
     <ClInclude Include="IWindowHandler.h" />
-    <ClInclude Include="KeycodeMapperUS.h" />
+    <ClInclude Include="KeycodeMapperEnUs.h" />
+    <ClInclude Include="KeycodeMapperEnUsX11.h" />
+    <ClInclude Include="KeyState.h" />
+    <ClInclude Include="KeystrokeCapturerLinuxX11.h" />
     <ClInclude Include="KeystrokeCapturerWindows.h" />
     <ClInclude Include="StdoutLogger.h" />
+    <ClInclude Include="WindowHandlerLinuxX11.h" />
     <ClInclude Include="WindowHandlerWindows.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
