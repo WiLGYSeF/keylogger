@@ -53,8 +53,6 @@ void KeystrokeCapturerLinuxX11::_keystrokeListener() {
                     int keysym = XKeycodeToKeysym(_display, (i << 3) + j, 0);
                     KeyState state = (bit & check) ? KeyState::Pressed : KeyState::Released;
 
-                    std::cout << keysym << std::endl;
-
                     if (_callback) {
                         _callback(keysym, state);
                     }

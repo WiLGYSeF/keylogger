@@ -1,5 +1,5 @@
-#ifndef KEYCODE_MAPPER_US_H
-#define KEYCODE_MAPPER_US_H
+#ifndef KEYCODE_MAPPER_EN_US_H
+#define KEYCODE_MAPPER_EN_US_H
 
 #include "IKeycodeMapper.h"
 
@@ -106,4 +106,4 @@ class KeycodeMapperEnUs : public Keylogger::IKeycodeMapper {
 
 }
 
-#endif // KEYCODE_MAPPER_US_H
+#endif // KEYCODE_MAPPER_EN_US_H

