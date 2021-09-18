@@ -66,6 +66,7 @@ bool FileLogger::open(
 
     writeHeader(_stream);
     _lastKeystroke = std::time(0);
+    return true;
 }
 
 void FileLogger::close() {
@@ -109,7 +110,7 @@ void FileLogger::logKeycode(int keycode, KeyState state) {
 
     if (_clipboard) {
         if (state == KeyState::Pressed) {
-            if (_modifierCtrl && keycode == 'V') {
+            if (_modifierCtrl && (keycode == 'V' || keycode == 'v')) {
                 _stream << std::endl
                     << "[PASTE: " << _clipboard->getClipboardString() << " ]"
                     << std::endl;
